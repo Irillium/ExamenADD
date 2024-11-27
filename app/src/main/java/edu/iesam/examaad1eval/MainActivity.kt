@@ -9,6 +9,7 @@ import edu.iesam.examaad1eval.features.ex1.data.remote.MockEx1RemoteDataSource
 import edu.iesam.examaad1eval.features.ex2.data.GameDataRepository
 import edu.iesam.examaad1eval.features.ex2.data.local.GameDataBase
 import edu.iesam.examaad1eval.features.ex2.data.local.GameDbLocalDataSource
+import edu.iesam.examaad1eval.features.ex2.data.local.converters.PlayersConverter
 import edu.iesam.examaad1eval.features.ex2.data.remote.MockEx2RemoteDataSource
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun executeExercise2(){
         //Ejecutar el ejercicio 2 desde aquí llamando al Ex2DataRepository directamente
         val db: GameDataBase = Room.databaseBuilder( this, GameDataBase::class.java,"game_db")
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration().addTypeConverter(PlayersConverter())
             .build()
 
         val gamesDao=db.gamesDao()
